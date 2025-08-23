@@ -1,0 +1,24 @@
+<%- include("../layouts/layout.ejs") %>
+
+<main>
+  <h2>Categories</h2>
+  <form method="POST" action="/admin/categories">
+    <input type="text" name="name" placeholder="Category Name" required />
+    <select name="parentId">
+      <option value="">-- Parent Category (optional) --</option>
+      <% categories.forEach(cat => { %>
+        <option value="<%= cat._id %>"><%= cat.name %></option>
+      <% }) %>
+    </select>
+    <button type="submit">Add</button>
+  </form>
+
+  <ul>
+    <% categories.forEach(cat => { %>
+      <li><%= cat.name %></li>
+    <% }) %>
+  </ul>
+</main>
+
+</body>
+</html>

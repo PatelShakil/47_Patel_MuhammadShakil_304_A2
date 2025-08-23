@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Profile</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Employee Profile</h1>
+            <button id="logout-btn">Logout</button>
+        </div>
+        <div id="profile-data"></div>
+        <a href="leave.html" class="nav-link">Manage Leave Applications</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'login.html';
+            }
+
+            $.ajax({
+                url: '/api/profile',
+                method: 'GET',
+                headers: { 'x-auth-token': token },
+                success: function(employee) {
+                    const profileHtml = `
+                        <p><strong>Employee ID:</strong> ${employee.empid}</p>
+                        <p><strong>Name:</strong> ${employee.name}</p>
+                        <p><strong>Email:</strong> ${employee.email}</p>
+                        <p><strong>Base Salary:</strong> ${employee.baseSalary}</p>
+                        <p><strong>HRA:</strong> ${employee.hra}</p>
+                        <p><strong>Deductions:</strong> ${employee.deductions}</p>
+                        <p><strong>Net Salary:</strong> ${employee.netSalary}</p>
+                    `;
+                    $('#profile-data').html(profileHtml);
+                },
+                error: function(err) {
+                    console.error(err);
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                }
+            });
+
+            $('#logout-btn').on('click', function() {
+                localStorage.removeItem('token');
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<%- include("../layouts/layout.ejs") %>
+
+<main>
+  <h2>Main Categories</h2>
+  <ul>
+    <% categories.forEach(cat => { %>
+      <li><a href="/category/<%= cat._id %>"><%= cat.name %></a></li>
+    <% }) %>
+  </ul>
+</main>
+
+</body>
+</html>

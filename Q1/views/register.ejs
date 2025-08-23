@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Register</title>
+</head>
+
+<body>
+    <h2>Register</h2>
+    <form action="/register" method="POST" enctype="multipart/form-data">
+        Username: <input type="text" name="username" value="<%= values.username || '' %>" /><br>
+        Password: <input type="password" name="password" /><br>
+        Confirm Password: <input type="password" name="confirm_password" /><br>
+        Email: <input type="email" name="email" value="<%= values.email || '' %>" /><br>
+        Gender:
+        <input type="radio" name="gender" value="male" <% if(values.gender==='male' ){%>checked<%}%>/> Male
+            <input type="radio" name="gender" value="female" <% if(values.gender==='female' ){%>checked<%}%>/>
+                Female<br>
+                Hobbies:
+                <input type="checkbox" name="hobbies" value="Sports" <% if(values.hobbies &&
+                    values.hobbies.includes('Sports')){%>checked<%}%>/> Sports
+                    <input type="checkbox" name="hobbies" value="Music" <% if(values.hobbies &&
+                        values.hobbies.includes('Music')){%>checked<%}%>/> Music
+                        <input type="checkbox" name="hobbies" value="Reading" <% if(values.hobbies &&
+                            values.hobbies.includes('Reading')){%>checked<%}%>/> Reading<br>
+                            Profile Pic: <input type="file" name="profile_pic" /><br>
+                            Other Pics: <input type="file" name="other_pics" multiple /><br>
+                            <button type="submit">Register</button>
+    </form>
+    <% if (errors.length> 0) { %>
+        <ul>
+            <% errors.forEach(function(error){ %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }); %>
+        </ul>
+        <% } %>
+</body>
+
+</html>

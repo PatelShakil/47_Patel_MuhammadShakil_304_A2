@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Employee Login</h1>
+        <form id="login-form">
+            <input type="text" id="empid" placeholder="Employee ID" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="error-msg" class="error"></p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            if (localStorage.getItem('token')) {
+                window.location.href = 'profile.html';
+            }
+
+            $('#login-form').on('submit', function(e) {
+                e.preventDefault();
+                const empid = $('#empid').val();
+                const password = $('#password').val();
+
+                $.ajax({
+                    url: '/api/login',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ empid, password }),
+                    success: function(data) {
+                        localStorage.setItem('token', data.token);
+                        window.location.href = 'profile.html';
+                    },
+                    error: function(err) {
+                        $('#error-msg').text(err.responseJSON.msg || 'Login Failed');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

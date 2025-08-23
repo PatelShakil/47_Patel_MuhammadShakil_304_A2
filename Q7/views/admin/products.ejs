@@ -1,0 +1,21 @@
+<%- include("../layouts/layout") %>
+<h2>Products</h2>
+<form method="POST" action="/admin/products">
+  <input type="text" name="name" placeholder="Product Name" required />
+  <input type="number" name="price" placeholder="Price" required />
+  <select name="categoryId" required>
+    <% categories.forEach(cat => { %>
+    <option value="<%= cat._id %>"><%= cat.name %></option>
+    <% }) %>
+  </select>
+  <button type="submit">Add</button>
+</form>
+
+<ul>
+  <% products.forEach(prod => { %>
+  <li>
+    <%= prod.name %> - $<%= prod.price %> (Category: <%= prod.categoryId.name
+    %>)
+  </li>
+  <% }) %>
+</ul>

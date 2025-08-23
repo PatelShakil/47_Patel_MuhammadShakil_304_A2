@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>User Data</title>
+</head>
+
+<body>
+    <h2>Registration Success</h2>
+    <table border="2">
+        <tr>
+            <td>Username</td>
+            <td>
+                <%= user.username %>
+            </td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>
+                <%= user.email %>
+            </td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td>
+                <%= user.gender %>
+            </td>
+        </tr>
+        <tr>
+            <td>Hobbies</td>
+            <td>
+                <%= user.hobbies.join(', ') %></td></tr>
+    <tr>
+      <td>Profile Pic</td>
+      <td>
+        <img src="/uploads/<%= user.profile_pic %>" alt="Profile Pic" width="150" />
+        <a href="/download/<%= user.profile_pic %>">Download</a>
+      </td>
+    </tr>
+    <tr>
+      <td>Other Pics</td>
+      <td>
+        <% user.other_pics.forEach(function(pic){ %>
+          <img src="/uploads/<%= pic %>" width="100"/>
+          <a href="/download/<%= pic %>">Download</a><br/>
+        <% }); %>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<h2>Employees</h2>
+<a href="/admin/employees/new">Add Employee</a> | <a href="/admin/logout">Logout</a>
+<table border="1" cellpadding="5">
+    <thead>
+        <tr>
+            <th>EmpID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Net Salary</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% employees.forEach(emp=> { %>
+            <tr>
+                <td>
+                    <%= emp.empid %>
+                </td>
+                <td>
+                    <%= emp.name %>
+                </td>
+                <td>
+                    <%= emp.email %>
+                </td>
+                <td>
+                    <%= emp.netSalary.toFixed(2) %>
+                </td>
+                <td>
+                    <a href="/admin/employees/<%= emp._id %>/edit">Edit</a> |
+                    <form method="POST" action="/admin/employees/<%= emp._id %>/delete" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Delete this employee?');">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+    </tbody>
+</table>

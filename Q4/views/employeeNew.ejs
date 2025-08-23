@@ -1,0 +1,10 @@
+<h2>Add New Employee</h2>
+<form method="POST" action="/admin/employees/new">
+    <input type="text" name="name" placeholder="Name" required />
+    <input type="email" name="email" placeholder="Email" required />
+    <input type="number" step="0.01" name="baseSalary" placeholder="Base Salary" required />
+    <input type="number" step="0.01" name="hra" placeholder="HRA" value="0" />
+    <input type="number" step="0.01" name="deductions" placeholder="Deductions" value="0" />
+    <button type="submit">Add Employee</button>
+</form>
+<a href="/admin/employees">Back to Employees List</a>

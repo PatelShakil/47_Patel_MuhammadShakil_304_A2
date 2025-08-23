@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Application</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Leave Application</h1>
+            <a href="profile.html" class="nav-link">Back to Profile</a>
+        </div>
+
+        <h2>Apply for Leave</h2>
+        <form id="leave-form">
+            <input type="date" id="date" required>
+            <textarea id="reason" placeholder="Reason for leave" required></textarea>
+            <button type="submit">Submit Application</button>
+        </form>
+
+        <hr>
+
+        <h2>Your Leave History</h2>
+        <table id="leave-history">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Leave data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'login.html';
+            }
+
+            function loadLeaveHistory() {
+                $.ajax({
+                    url: '/api/leave',
+                    method: 'GET',
+                    headers: { 'x-auth-token': token },
+                    success: function(leaves) {
+                        const historyBody = $('#leave-history tbody');
+                        historyBody.empty();
+                        leaves.forEach(leave => {
+                            const row = `
+                                <tr>
+                                    <td>${new Date(leave.date).toLocaleDateString()}</td>
+                                    <td>${leave.reason}</td>
+                                    <td>${leave.grant}</td>
+                                </tr>
+                            `;
+                            historyBody.append(row);
+                        });
+                    }
+                });
+            }
+
+            loadLeaveHistory();
+
+            $('#leave-form').on('submit', function(e) {
+                e.preventDefault();
+                const date = $('#date').val();
+                const reason = $('#reason').val();
+
+                $.ajax({
+                    url: '/api/leave',
+                    method: 'POST',
+                    headers: { 'x-auth-token': token },
+                    contentType: 'application/json',
+                    data: JSON.stringify({ date, reason }),
+                    success: function() {
+                        loadLeaveHistory();
+                        $('#leave-form')[0].reset();
+                    },
+                    error: function(err) {
+                        alert('Failed to submit application');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<h2>Edit Employee</h2>
+<form method="POST" action="/admin/employees/<%= employee._id %>/edit">
+    <input type="text" name="name" placeholder="Name" value="<%= employee.name %>" required />
+    <input type="email" name="email" placeholder="Email" value="<%= employee.email %>" required />
+    <input type="number" step="0.01" name="baseSalary" placeholder="Base Salary" value="<%= employee.baseSalary %>"
+        required />
+    <input type="number" step="0.01" name="hra" placeholder="HRA" value="<%= employee.hra %>" />
+    <input type="number" step="0.01" name="deductions" placeholder="Deductions" value="<%= employee.deductions %>" />
+    <button type="submit">Update Employee</button>
+</form>
+<a href="/admin/employees">Back to Employees List</a>
